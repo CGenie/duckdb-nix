@@ -8,41 +8,52 @@
 
   outputs = {
     self,
-    nixpkgs,
-    flake-utils,
+      nixpkgs,
+      flake-utils,
   }: let
     systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
-    outputs = flake-utils.lib.eachSystem systems (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          self.overlay
-        ];
-      };
-    in {
-      # packages exported by the flake
-      packages = rec {
-        main = pkgs.callPackage ./packages/main.nix {
+    outputs = flake-utils.lib.eachSystem systems (system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [
+            self.overlay
+          ];
+        };
+        v1_1_2 = pkgs.callPackage ./packages/v1.1.2.nix {
           stdenv = pkgs.libcxxStdenv;
         };
-        v0_10_2 = pkgs.callPackage ./packages/v0.10.2.nix {
-          stdenv = pkgs.libcxxStdenv;
+      in {
+        # packages exported by the flake
+        packages = rec {
+          inherit v1_1_2;
+          
+          main = pkgs.callPackage ./packages/main.nix {
+            stdenv = pkgs.libcxxStdenv;
+          };
+          v0_10_2 = pkgs.callPackage ./packages/v0.10.2.nix {
+            stdenv = pkgs.libcxxStdenv;
+          };
+          v0_10_1 = pkgs.callPackage ./packages/v0.10.1.nix {
+            stdenv = pkgs.libcxxStdenv;
+          };
+          v0_10_0 = pkgs.callPackage ./packages/v0.10.0.nix {
+            stdenv = pkgs.libcxxStdenv;
+          };
+          v0_9_2 = pkgs.callPackage ./packages/v0.9.2.nix {
+            stdenv = pkgs.libcxxStdenv;
+          };
+          #default = v0_10_1;
+          default = v1_1_2;
         };
-        v0_10_1 = pkgs.callPackage ./packages/v0.10.1.nix {
-          stdenv = pkgs.libcxxStdenv;
-        };
-        v0_10_0 = pkgs.callPackage ./packages/v0.10.0.nix {
-          stdenv = pkgs.libcxxStdenv;
-        };
-        v0_9_2 = pkgs.callPackage ./packages/v0.9.2.nix {
-          stdenv = pkgs.libcxxStdenv;
-        };
-        default = v0_10_1;
-      };
 
-      # nix fmt
-      formatter = pkgs.alejandra;
-    });
+        # nix fmt
+        formatter = pkgs.alejandra;
+
+        devShells.default = pkgs.mkShell {
+          buildInputs = [ v1_1_2 ];
+        };
+      });
   in
     outputs
     // {
