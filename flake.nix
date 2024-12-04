@@ -19,14 +19,14 @@
           self.overlay
         ];
       };
-    in {
+    in rec {
       # packages exported by the flake
       packages = rec {
         main = pkgs.callPackage ./packages/main.nix {
           stdenv = pkgs.libcxxStdenv;
         };
         v1_1_3 = pkgs.callPackage ./packages/v1.1.3.nix {
-          stdenv = pkgs.libcxxStdenv;
+          stdenv = pkgs.stdenv;
         };
         v0_10_2 = pkgs.callPackage ./packages/v0.10.2.nix {
           stdenv = pkgs.libcxxStdenv;
@@ -45,6 +45,10 @@
 
       # nix fmt
       formatter = pkgs.alejandra;
+
+      devShells.default = pkgs.mkShell {
+        buildInputs = [ packages.v1_1_3 ];
+      };
     });
   in
     outputs
