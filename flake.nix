@@ -25,6 +25,9 @@
         main = pkgs.callPackage ./packages/main.nix {
           stdenv = pkgs.libcxxStdenv;
         };
+        v1_2_0 = pkgs.callPackage ./packages/v1.2.0.nix {
+          stdenv = pkgs.stdenv;
+        };
         v1_1_3 = pkgs.callPackage ./packages/v1.1.3.nix {
           stdenv = pkgs.stdenv;
         };
@@ -47,7 +50,7 @@
       formatter = pkgs.alejandra;
 
       devShells.default = pkgs.mkShell {
-        buildInputs = [ packages.v1_1_3 ];
+        buildInputs = [ packages.v1_2_0 ];
       };
     });
   in
