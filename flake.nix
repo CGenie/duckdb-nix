@@ -2,7 +2,7 @@
   description = "Nix flake for DuckDB";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -31,19 +31,7 @@
         v1_1_3 = pkgs.callPackage ./packages/v1.1.3.nix {
           stdenv = pkgs.stdenv;
         };
-        v0_10_2 = pkgs.callPackage ./packages/v0.10.2.nix {
-          stdenv = pkgs.libcxxStdenv;
-        };
-        v0_10_1 = pkgs.callPackage ./packages/v0.10.1.nix {
-          stdenv = pkgs.libcxxStdenv;
-        };
-        v0_10_0 = pkgs.callPackage ./packages/v0.10.0.nix {
-          stdenv = pkgs.libcxxStdenv;
-        };
-        v0_9_2 = pkgs.callPackage ./packages/v0.9.2.nix {
-          stdenv = pkgs.libcxxStdenv;
-        };
-        default = v0_10_1;
+        default = v1_2_0;
       };
 
       # nix fmt
