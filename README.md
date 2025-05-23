@@ -2,6 +2,13 @@
 
 Nix flake for development with multiple DuckDB versions
 
+## TLDR
+
+Quick and dirty way to get a DuckDB in your shell:
+```shell
+nix -L shell 'github:cgenie/duckdb-nix?ref=v1.3.0'#v1_3_0_bin
+```
+
 ## Versions
 
 - [main](https://github.com/duckdb/duckdb/commits/main)
