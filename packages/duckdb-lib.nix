@@ -18,9 +18,10 @@ stdenv.mkDerivation {
   phases = ["installPhase" "patchPhase"];
   installPhase = ''
     mkdir -p $out/src
+    mkdir -p $out/lib
     cp $src/duckdb.h $out/src/
-    cp $src/libduckdb.so $out/src/
-    cp $src/libduckdb_static.a $out/src/
+    cp $src/libduckdb.so $out/lib/
+    cp $src/libduckdb_static.a $out/lib/
     echo $out
   '';
 }
