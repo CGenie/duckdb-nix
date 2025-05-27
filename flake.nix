@@ -27,7 +27,7 @@
         };
         v1_3_0_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
           stdenv = pkgs.stdenv;
-          version = "v.1.3.0";
+          version = "v1.3.0";
           sha256 = "+gW5sBlPkuZT4F9eCKbA9FO4c/bbwLwbOwZuMUxVjHg=";
         };
         v1_3_0_lib = pkgs.callPackage ./packages/duckdb-lib.nix {
