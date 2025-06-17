@@ -25,6 +25,19 @@
         main = pkgs.callPackage ./packages/main.nix {
           stdenv = pkgs.libcxxStdenv;
         };
+        v1_3_1_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
+          stdenv = pkgs.stdenv;
+          version = "v1.3.1";
+          sha256 = "4kCS/w1sfFHAxUO+YshxnMRlS3qfGCZwQEHcxlmwj5o=";
+        };
+        v1_3_1_lib = pkgs.callPackage ./packages/duckdb-lib.nix {
+          stdenv = pkgs.stdenv;
+          version = "v1.3.1";
+          sha256 = "/sloxu/TterKroxGgal+t48AkS8S0qdRu8LQjyIbKhY=";
+        };
+        v1_3_1 = pkgs.callPackage ./packages/v1.3.1.nix {
+          stdenv = pkgs.stdenv;
+        };
         v1_3_0_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
           stdenv = pkgs.stdenv;
           version = "v1.3.0";
@@ -63,6 +76,9 @@
 
       devShells.default = pkgs.mkShell {
         buildInputs = with packages; [
+          v1_3_1_bin
+          v1_3_1_lib
+          v1_3_1
           v1_3_0_bin
           v1_3_0_lib
           v1_3_0
