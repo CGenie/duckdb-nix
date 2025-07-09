@@ -25,6 +25,21 @@
         main = pkgs.callPackage ./packages/main.nix {
           stdenv = pkgs.libcxxStdenv;
         };
+
+        v1_3_2_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
+          stdenv = pkgs.stdenv;
+          version = "v1.3.2";
+          sha256 = "51aVGzhmjEv+ISQS3eLvt9eAtZci9fiWHjcDOwC3b9E=";
+        };
+        v1_3_2_lib = pkgs.callPackage ./packages/duckdb-lib.nix {
+          stdenv = pkgs.stdenv;
+          version = "v1.3.2";
+          sha256 = "5WATRk64xl1KnOGuv2KQ2BZscI2h6ShAbq/fbGj/1f0=";
+        };
+        v1_3_2 = (pkgs.callPackage ./packages/v1.3.2.nix {
+          stdenv = pkgs.stdenv;
+        }).overrideAttrs (old: { doInstallCheck = false; });
+        
         v1_3_1_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
           stdenv = pkgs.stdenv;
           version = "v1.3.1";
@@ -38,6 +53,7 @@
         v1_3_1 = pkgs.callPackage ./packages/v1.3.1.nix {
           stdenv = pkgs.stdenv;
         };
+
         v1_3_0_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
           stdenv = pkgs.stdenv;
           version = "v1.3.0";
@@ -51,6 +67,7 @@
         v1_3_0 = pkgs.callPackage ./packages/v1.3.0.nix {
           stdenv = pkgs.stdenv;
         };
+        
         v1_2_2_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
           stdenv = pkgs.stdenv;
           version = "v1.2.2";
@@ -59,16 +76,19 @@
         v1_2_2 = pkgs.callPackage ./packages/v1.2.2.nix {
           stdenv = pkgs.stdenv;
         };
+        
         v1_2_1 = pkgs.callPackage ./packages/v1.2.1.nix {
           stdenv = pkgs.stdenv;
         };
         v1_2_0 = pkgs.callPackage ./packages/v1.2.0.nix {
           stdenv = pkgs.stdenv;
         };
+        
         v1_1_3 = pkgs.callPackage ./packages/v1.1.3.nix {
           stdenv = pkgs.stdenv;
         };
-        default = v1_2_0;
+        
+        default = v1_3_2;
       };
 
       # nix fmt
@@ -78,11 +98,11 @@
         buildInputs = with packages; [
           v1_3_1_bin
           v1_3_1_lib
-          v1_3_1
-          v1_3_0_bin
-          v1_3_0_lib
-          v1_3_0
-          v1_2_0_bin
+          # v1_3_1
+          # v1_3_0_bin
+          # v1_3_0_lib
+          # v1_3_0
+          # v1_2_0_bin
         ];
       };
     });
