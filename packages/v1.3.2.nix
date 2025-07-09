@@ -18,7 +18,7 @@ let
   versions = {
       version = "1.3.2";
       rev = "0b83e5d2f68bc02dfefde74b846bd039f078affa";
-      hash = "sha256-32wEbYF3immUkwGVeLFNncQ5pRpA4ujbaCNwBUcmMNA=";
+      hash = "sha256-6NMQ893g+nOiH8dnb63oa+fZMNXs8N6tJv+Er4x547U=";
   };
 in
 stdenv.mkDerivation (finalAttrs: {
