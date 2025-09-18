@@ -26,6 +26,20 @@
           stdenv = pkgs.libcxxStdenv;
         };
 
+        v1_4_0_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
+          stdenv = pkgs.stdenv;
+          version = "v1.4.0";
+          sha256 = "sha256-Di5hkXyIZ3Ve4ibPF0DLZNlMEz7EOy8AJJcaepGxaX8=";
+        };
+        v1_4_0_lib = pkgs.callPackage ./packages/duckdb-lib.nix {
+          stdenv = pkgs.stdenv;
+          version = "v1.4.0";
+          sha256 = "sha256-vRX2R/3+XTJg9paWq3eFYnF8nJqSOjIUyYE5QOhLZ4Y=";
+        };
+        v1_4_0 = (pkgs.callPackage ./packages/v1.4.0.nix {
+          stdenv = pkgs.stdenv;
+        }).overrideAttrs (old: { doInstallCheck = false; });
+        
         v1_3_2_bin = pkgs.callPackage ./packages/duckdb-bin.nix {
           stdenv = pkgs.stdenv;
           version = "v1.3.2";
@@ -88,7 +102,7 @@
           stdenv = pkgs.stdenv;
         };
         
-        default = v1_3_2;
+        default = v1_4_0;
       };
 
       # nix fmt
@@ -96,8 +110,10 @@
 
       devShells.default = pkgs.mkShell {
         buildInputs = with packages; [
-          v1_3_1_bin
-          v1_3_1_lib
+          v1_4_0_bin
+          v1_4_0_lib
+          # v1_3_1_bin
+          # v1_3_1_lib
           # v1_3_1
           # v1_3_0_bin
           # v1_3_0_lib
